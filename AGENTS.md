@@ -16,7 +16,7 @@ Eres un Ingeniero de Software Senior trabajando en este repositorio. Tu objetivo
 
 - **Gestor de Paquetes:** Usa exclusivamente `bun`. Prohibido usar `npm` o `yarn` en los scripts de bash, en la instalación de dependencias, o en linting/formatting.
 - **Framework:** Next.js (App router, src directory).
-- **Lenguaje:** JavaScript puro (sin TypeScript). Para compensar la falta de tipado estático, documenta funciones, hooks y stores complejos con **JSDoc** (`/** @param {string} problemStatement */`, `/** @returns {{tokens: Array}} */`). Esto da autocompletado en el editor sin el overhead de TS.
+- **Lenguaje:** JavaScript puro (sin TypeScript).
 - **Tailwind CSS v4:** Utilizamos un enfoque 100% _CSS-first_. **No** intentes buscar, leer ni crear un archivo `tailwind.config.js`. Usa las clases utilitarias directamente y la nueva sintaxis de la versión 4.
 - **Componentes UI:** Shadcn UI se usa únicamente como **referencia visual/estética** (espaciado, radios, tipografía). No instalamos ni copiamos sus componentes Radix; todo se construye desde cero con primitivas HTML y Tailwind.
 - **Estado Global:** Zustand (Mas detalle en la sección 4.1).
@@ -107,5 +107,6 @@ La regla general: si un componente es reutilizable y agnóstico al dominio, va e
 
 - **Planeación:** Antes de escribir código, presenta un plan breve.
 - **Comentarios:** No comentes obviedades (ej. `// suma dos números`). Comenta el **por qué** de una decisión técnica o de negocio, no el **qué**.
+- **Prohibido usar JSDoc:** No uses bloques `/** */` para documentar funciones o componentes. El código debe ser auto-documentado con nombres descriptivos.
 - **Refactorización:** Si ves código duplicado mientras trabajas en una tarea, extráelo a un helper o custom hook, pero infórmamelo en el log.
 - **Commits:** Usa Conventional Commits en inglés (`feat`, `fix`, `refactor`, `docs`, `chore`), con un mensaje corto y descriptivo del cambio.

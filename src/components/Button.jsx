@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import LoaderLines from "@boxicons/react/LoaderLines";
 
 const buttonVariants = cva(
@@ -31,29 +31,6 @@ const buttonVariants = cva(
   },
 );
 
-/**
- * Componente Button para acciones principales y secundarias.
- * Sigue principios de diseño Emil Kowalski: feedback táctil inmediato
- * con escala al presionar y transiciones rápidas.
- *
- * @param {Object} props
- * @param {'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'} [props.variant='primary']
- *   Variante visual del botón.
- * @param {'sm' | 'md' | 'lg' | 'icon'} [props.size='md']
- *   Tamaño del botón.
- * @param {boolean} [props.disabled=false]
- *   Estado deshabilitado.
- * @param {boolean} [props.isLoading=false]
- *   Muestra un spinner y deshabilita la interacción.
- * @param {React.ReactNode} props.children
- *   Contenido del botón.
- * @param {string} [props.className]
- *   Clases adicionales para personalización.
- * @param {React.MouseEventHandler<HTMLButtonElement>} [props.onClick]
- *   Handler del evento click.
- * @param {'button' | 'submit' | 'reset'} [props.type='button']
- *   Tipo HTML del botón.
- */
 export function Button({
   variant,
   size,
@@ -70,7 +47,7 @@ export function Button({
       type={type}
       disabled={disabled || isLoading}
       onClick={onClick}
-      className={clsx(buttonVariants({ variant, size }), className)}
+      className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     >
       {isLoading && (
