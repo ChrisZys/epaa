@@ -20,7 +20,7 @@ Eres un Ingeniero de Software Senior trabajando en este repositorio. Tu objetivo
 - **Tailwind CSS v4:** Utilizamos un enfoque 100% _CSS-first_. **No** intentes buscar, leer ni crear un archivo `tailwind.config.js`. Usa las clases utilitarias directamente y la nueva sintaxis de la versión 4.
 - **Componentes UI:** Shadcn UI se usa únicamente como **referencia visual/estética** (espaciado, radios, tipografía). No instalamos ni copiamos sus componentes Radix; todo se construye desde cero con primitivas HTML y Tailwind.
 - **Estado Global:** Zustand (Mas detalle en la sección 4.1).
-- **Iconos:** Utiliza siempre el paquete oficial `boxicons-react`. No inventes wrappers manuales ni uses SVGs crudos pegados en el código a menos que no exista en la librería.
+- **Iconos:** Utiliza siempre el paquete oficial `@boxicons/react`. Prohibido usar SVGs inline crudos o cualquier otro tipo de icono (SVG, emoji, texto) a menos que el usuario lo autorice explícitamente. Si el ícono que necesitas no existe en `@boxicons/react`, pregúntame antes de usar una alternativa.
 - **Animaciones**: Usa siempre la librería `motion/react` para implementar animaciones. No uses la versión anterior `framer-motion`.
 
 ## 3. Nomenclatura (Naming Conventions)
@@ -28,8 +28,9 @@ Eres un Ingeniero de Software Senior trabajando en este repositorio. Tu objetivo
 - **Variables booleanas:** Deben empezar siempre con prefijos claros como `is`, `has`, `should` o `can` (ej. `isOpen`, `hasAccess`).
 - **Nombres descriptivos:** Cero abreviaturas crípticas. Nombres largos y explícitos. Usa `userProfileList` en lugar de `usrData` o simplemente `data`.
 - **Componentes y Funciones:**
-  - Para definir un componente usa siempre _function Component()_ y si se necesita exportar, que sea siempre _export default_.
-  - Las funciones deben ser siempre _arrow functions_.
+  - Para definir un componente usa siempre _function Component()_.
+  - **Export function obligatorio:** Todos los componentes deben exportarse con `export function ComponentName()`. Prohibido usar `export default`, `export const` o `export function` anónima para componentes.
+  - Las funciones (no componentes) deben ser siempre _arrow functions_.
 
 ## 4. Reglas de Arquitectura y Estilo
 
@@ -91,7 +92,7 @@ La regla general: si un componente es reutilizable y agnóstico al dominio, va e
 
 ## 7. Anti-Patrones (QUÉ NO HACER)
 
-- **No inventes dependencias:** Si necesitas una librería nueva, propónla primero y espera aprobación.
+- **No instales dependencias sin permiso explícito:** Nunca ejecutes `bun add`, `bun install` ni ningún comando que modifique `package.json` sin preguntarme primero y recibir mi autorización expresa. Esto incluye cualquier paquete o librería, sin excepción. Primero pregunta, espera mi respuesta, luego instala.
 - **No dejes `console.log`:** Limpia tus logs de depuración antes de dar por terminado un archivo.
 - **No uses código obsoleto:** Asegúrate de usar las APIs modernas de los frameworks (Ej: no uses `getServerSideProps` si estamos en Next.js App Router).
 - **No uses animaciones CSS complejas (keyframes largos):** Utiliza Motion con configuraciones de 'spring' (stiffness y damping) para lograr el "Emil Kowalski feel".
