@@ -101,7 +101,7 @@ function DropdownRoot({
           aria-expanded={isOpen}
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "bg-background shadow-sm",
+            "bg-background",
           )}
         >
           <motion.span

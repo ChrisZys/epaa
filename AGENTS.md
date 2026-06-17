@@ -133,7 +133,7 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 
 ## 9. Flujo de Trabajo
 
-- **Planeación:** Antes de escribir código, presenta un plan breve.
+- **Planeación:** Antes de escribir código, presenta un plan breve. Para componentes grandes o importantes, muestra el plan completo (estructura, props, subcomponentes, comportamiento) y espera veredicto del usuario antes de implementar.
 - **Comentarios:** No comentes obviedades (ej. `// suma dos números`). Comenta el **por qué** de una decisión técnica o de negocio, no el **qué**.
 - **Prohibido usar JSDoc:** No uses bloques `/** */` para documentar funciones o componentes. El código debe ser auto-documentado con nombres descriptivos.
 - **Refactorización:** Si ves código duplicado mientras trabajas en una tarea, extráelo a un helper o custom hook, pero infórmamelo en el log.
