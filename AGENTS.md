@@ -102,11 +102,13 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 - El backdrop (oscurecido + `backdrop-blur`) es independiente del shared layout: anímalo por separado con `AnimatePresence` y un simple fade de opacidad. No forma parte del morph del botón.
   **Dropdown (panel anclado):**
 
+- Los subcomponentes se exportan como named exports independientes (estilo shadcn), no como propiedades del componente padre. Ej: `export function DropdownItem()` y se importa con `import { Dropdown, DropdownItem }`. El patrón compuesto (`Dropdown.Item`) no funciona al cruzar la barrera server/client de Next.js porque Turbopack crea un proxy que no reenvía el acceso a propiedades estáticas.
 - Dos elementos comparten `layoutId`: un `motion.button` (trigger) y un `motion.div` (panel). El panel se renderiza dentro de `AnimatePresence`.
 - El panel se posiciona con `absolute top-0 left-0` (misma posición que el trigger), no con `top-full`. El morph se siente como si el botón se expandiera hacia abajo.
+- El trigger usa `buttonVariants` (importado de `Button.jsx`) para mantener consistencia visual con el resto de botones de la app.
 - El trigger del botón se blurrea al abrir el dropdown (de nítido a `blur(16px)` + `opacity: 0`). En el panel, el mismo trigger aparece como header con un botón ✕ para cerrar.
 - Todo el contenido del panel (header + items) se blurrea como una sola unidad: entra con `blur(16px)` + `opacity: 0` → `blur(0px)` + `opacity: 1`. El blur se aplica a un `motion.div` interno que envuelve header e items, nunca al contenedor que lleva el `layoutId`.
-- Config del fade-in del contenido: `{ duration: 0.2, ease: "easeOut", delay: 0.1 }`.
+- Config del fade-in del contenido: `{ duration: 0.3, ease: "easeOut", delay: 0.15 }`.
 - El panel tiene `overflow-hidden` para que el contenido no se vea durante el morph de cierre.
 - No requiere backdrop oscurecido. Para cerrar al hacer click afuera, usa un listener `mousedown` con `contains()`.
 

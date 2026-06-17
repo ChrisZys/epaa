@@ -6,12 +6,12 @@ export const morphSpring = {
 
 export const contentBlurExit = {
   duration: 0.2,
-  ease: "easeOut",
+  ease: "easeInOut",
 };
 
 export const contentBlurEnter = {
   duration: 0.3,
-  ease: "easeOut",
+  ease: "easeInOut",
   delay: 0.15,
 };
 
