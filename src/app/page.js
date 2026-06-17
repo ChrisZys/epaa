@@ -1,13 +1,7 @@
-import { Dropdown, DropdownItem } from "@/components/Dropdown";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <Dropdown trigger={<span>Menú</span>}>
-        <DropdownItem>Profile</DropdownItem>
-        <DropdownItem>Settings</DropdownItem>
-        <DropdownItem>Logout</DropdownItem>
-      </Dropdown>
+    <div className="flex flex-1 items-center justify-center">
+      <h1 className="text-2xl font-semibold">EPAA — Entorno para el Aprendizaje de Algoritmos</h1>
     </div>
   );
 }
