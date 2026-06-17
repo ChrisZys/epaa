@@ -91,19 +91,24 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 **Regla general (aplica a ambos):**
 
 - Usa shared layout transition de Motion: el botón disparador y el contenedor destino comparten el mismo `layoutId`, único por instancia (ej. `layoutId={`modal-${itemId}`}`), nunca un string genérico repetido — si hay varias instancias del mismo patrón en la pantalla, un `layoutId` duplicado causa colisiones y morphs cruzados entre elementos distintos.
-- El contenido interno (texto/ícono del botón vs. contenido del modal/dropdown) **nunca** hace solo crossfade de opacidad. Combina **blur + opacity**: el contenido del disparador pasa de `blur(0px) / opacity: 1` a `blur(8px) / opacity: 0` en una transición corta (~120-150ms, `tween`, no `spring`). El contenido del destino entra a la inversa, con un pequeño delay para que no se vuelva legible hasta que la forma ya casi terminó de crecer.
-- Para las configuraciones de animacion, es preferible tener un archivo animations.js, donde englobar cada una de las tipo de animaciones a usar en los componentes motion (`morphingAnimation`, `fadeInAnimation`, etc).
+- **Ambos elementos** que comparten `layoutId` deben recibir `transition={morphSpring}` para que la animación funcione. Sin el `transition` prop, Motion usa valores por defecto que no producen el efecto deseado.
+- Para las configuraciones de animación, usa el archivo `src/lib/animations.js` donde se exportan las configs (`morphSpring`, `contentBlurEnter`, `contentBlurExit`, `fadeIn`).
 - El blur se aplica **únicamente** al contenido interno, envuelto en su propio `motion.div` — nunca al contenedor que lleva el `layoutId`. Si desenfocas la forma completa, el borde y el border-radius del morph también se ven borrosos, que no es el efecto buscado.
-- Spring de la forma (mismo que el resto del proyecto, salvo que se sienta distinto al probarlo aquí): `{ type: "spring", stiffness: 350, damping: 26 }`.
-- Precaución de rendimiento: combinar `filter: blur()` con una animación de layout (transform) puede causar parpadeos en algunos navegadores (Safari es el más propenso). Mantén el blur radius moderado (6-10px) y prueba en dispositivos reales antes de dar por terminada la animación.
+- Spring de la forma: `{ type: "spring", stiffness: 380, damping: 22 }`. Ajustar damping para controlar bounce (menor = más rebote).
+- Precaución de rendimiento: combinar `filter: blur()` con una animación de layout (transform) puede causar parpadeos en algunos navegadores (Safari es el más propenso). Mantén el blur radius en 16px como máximo y prueba en dispositivos reales antes de dar por terminada la animación.
   **Modal (overlay centrado):**
 
 - El `layoutId` crece hasta una caja centrada en pantalla (`position: fixed`, centrado con flex, `max-width`/`max-height` definidos).
 - El backdrop (oscurecido + `backdrop-blur`) es independiente del shared layout: anímalo por separado con `AnimatePresence` y un simple fade de opacidad. No forma parte del morph del botón.
-  **Dropdown / Drawer (panel anclado):**
+  **Dropdown (panel anclado):**
 
-- El `layoutId` crece anclado a la posición del botón, no centrado en pantalla; calcula el anclaje (arriba/abajo) según el espacio disponible en el viewport.
-- No requiere backdrop oscurecido. Si necesitas cerrar al hacer click afuera, usa un listener de click-outside transparente, no un overlay visual.
+- Dos elementos comparten `layoutId`: un `motion.button` (trigger) y un `motion.div` (panel). El panel se renderiza dentro de `AnimatePresence`.
+- El panel se posiciona con `absolute top-0 left-0` (misma posición que el trigger), no con `top-full`. El morph se siente como si el botón se expandiera hacia abajo.
+- El trigger del botón se blurrea al abrir el dropdown (de nítido a `blur(16px)` + `opacity: 0`). En el panel, el mismo trigger aparece como header con un botón ✕ para cerrar.
+- Todo el contenido del panel (header + items) se blurrea como una sola unidad: entra con `blur(16px)` + `opacity: 0` → `blur(0px)` + `opacity: 1`. El blur se aplica a un `motion.div` interno que envuelve header e items, nunca al contenedor que lleva el `layoutId`.
+- Config del fade-in del contenido: `{ duration: 0.2, ease: "easeOut", delay: 0.1 }`.
+- El panel tiene `overflow-hidden` para que el contenido no se vea durante el morph de cierre.
+- No requiere backdrop oscurecido. Para cerrar al hacer click afuera, usa un listener `mousedown` con `contains()`.
 
 ## 6. Fase de Verificación: Casos Límite
 
