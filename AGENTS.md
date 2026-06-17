@@ -84,6 +84,26 @@ La regla general: si un componente es reutilizable y agnóstico al dominio, va e
 - Las categorías de color **nunca** deben depender únicamente del color para comunicar significado. Cada categoría debe llevar también un ícono o etiqueta de texto distintiva, para que estudiantes con daltonismo puedan distinguirlas igual que el resto.
 - Las áreas interactuables deben ser navegables por teclado cuando sea razonable (foco visible, orden lógico de tabulación), sobre todo en el canvas de Diseño.
 
+### 5.3 Morphing de Elementos UI (Botón → Modal / Dropdown / Drawer)
+
+Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón de la app que se transforme en un panel más grande (modal, dropdown, tarjeta expandida, etc.).
+
+**Regla general (aplica a ambos):**
+
+- Usa shared layout transition de Motion: el botón disparador y el contenedor destino comparten el mismo `layoutId`, único por instancia (ej. `layoutId={`modal-${itemId}`}`), nunca un string genérico repetido — si hay varias instancias del mismo patrón en la pantalla, un `layoutId` duplicado causa colisiones y morphs cruzados entre elementos distintos.
+- El contenido interno (texto/ícono del botón vs. contenido del modal/dropdown) **nunca** hace solo crossfade de opacidad. Combina **blur + opacity**: el contenido del disparador pasa de `blur(0px) / opacity: 1` a `blur(8px) / opacity: 0` en una transición corta (~120-150ms, `tween`, no `spring`). El contenido del destino entra a la inversa, con un pequeño delay para que no se vuelva legible hasta que la forma ya casi terminó de crecer.
+- El blur se aplica **únicamente** al contenido interno, envuelto en su propio `motion.div` — nunca al contenedor que lleva el `layoutId`. Si desenfocas la forma completa, el borde y el border-radius del morph también se ven borrosos, que no es el efecto buscado.
+- Spring de la forma (mismo que el resto del proyecto, salvo que se sienta distinto al probarlo aquí): `{ type: "spring", stiffness: 350, damping: 26 }`.
+- Precaución de rendimiento: combinar `filter: blur()` con una animación de layout (transform) puede causar parpadeos en algunos navegadores (Safari es el más propenso). Mantén el blur radius moderado (6-10px) y prueba en dispositivos reales antes de dar por terminada la animación.
+  **Modal (overlay centrado):**
+
+- El `layoutId` crece hasta una caja centrada en pantalla (`position: fixed`, centrado con flex, `max-width`/`max-height` definidos).
+- El backdrop (oscurecido + `backdrop-blur`) es independiente del shared layout: anímalo por separado con `AnimatePresence` y un simple fade de opacidad. No forma parte del morph del botón.
+  **Dropdown / Drawer (panel anclado):**
+
+- El `layoutId` crece anclado a la posición del botón, no centrado en pantalla; calcula el anclaje (arriba/abajo) según el espacio disponible en el viewport.
+- No requiere backdrop oscurecido. Si necesitas cerrar al hacer click afuera, usa un listener de click-outside transparente, no un overlay visual.
+
 ## 6. Fase de Verificación: Casos Límite
 
 - La simulación paso a paso debe tener un **límite máximo de pasos** (define un número razonable, ej. 1000) antes de abortar automáticamente, para evitar que un loop infinito en el algoritmo del estudiante cuelgue el navegador.
