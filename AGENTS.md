@@ -112,6 +112,42 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 - El panel tiene `overflow-hidden` para que el contenido no se vea durante el morph de cierre.
 - No requiere backdrop oscurecido. Para cerrar al hacer click afuera, usa un listener `mousedown` con `contains()`.
 
+### 5.4 Transiciones de Iconos en Botones
+
+Cuando un botón cambia de icono (ThemeToggle, menú mobile, etc.), usa `AnimatePresence mode="wait"` con `initial={false}`:
+
+- Envuelve cada icono en un `motion.span` con `key` único por estado (ej. `key={isDark ? "moon" : "sun"}`).
+- **NUNCA uses spring** para estos — son interacciones frecuentes y el spring se siente lento. Usa `iconBlurExit` (80ms easeOut) y `iconBlurEnter` (100ms easeOut) de `src/lib/animations.js`.
+- **Valores de la transición:**
+  - Entrada (`initial`/`exit`): `scale: 0.85`, `filter: "blur(2px)"`, `opacity: 0`
+  - Salida (`animate`): `scale: 1`, `filter: "blur(0px)"`, `opacity: 1`
+- El `transition` se especifica inline en cada variante (`animate.transition`, `exit.transition`), no como prop del `motion.span`.
+- Patrón completo:
+
+```jsx
+<AnimatePresence mode="wait" initial={false}>
+  <motion.span
+    key={condition ? "icon-a" : "icon-b"}
+    initial={{ scale: 0.85, filter: "blur(2px)", opacity: 0 }}
+    animate={{
+      scale: 1,
+      filter: "blur(0px)",
+      opacity: 1,
+      transition: iconBlurEnter,
+    }}
+    exit={{
+      scale: 0.85,
+      filter: "blur(2px)",
+      opacity: 0,
+      transition: iconBlurExit,
+    }}
+    className="flex"
+  >
+    {condition ? <IconA /> : <IconB />}
+  </motion.span>
+</AnimatePresence>
+```
+
 ## 6. Fase de Verificación: Casos Límite
 
 - La simulación paso a paso debe tener un **límite máximo de pasos** (define un número razonable, ej. 1000) antes de abortar automáticamente, para evitar que un loop infinito en el algoritmo del estudiante cuelgue el navegador.

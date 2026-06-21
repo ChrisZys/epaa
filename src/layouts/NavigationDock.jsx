@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Menu from "@boxicons/react/Menu";
+import { Menu, X } from "@boxicons/react";
+import { iconBlurExit, iconBlurEnter } from "@/lib/animations";
 import {
   AnimatePresence,
   motion,
@@ -148,7 +149,31 @@ function NavigationDockMobile({ items, className, activeHref }) {
         onClick={() => setOpen(!open)}
         className="flex h-10 w-10 items-center justify-center rounded-full bg-card"
       >
-        <Menu className="h-5 w-5 text-muted-foreground" />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={open ? "x" : "menu"}
+            initial={{ scale: 0.85, filter: "blur(2px)", opacity: 0 }}
+            animate={{
+              scale: 1,
+              filter: "blur(0px)",
+              opacity: 1,
+              transition: iconBlurEnter,
+            }}
+            exit={{
+              scale: 0.85,
+              filter: "blur(2px)",
+              opacity: 0,
+              transition: iconBlurExit,
+            }}
+            className="flex"
+          >
+            {open ? (
+              <X className="h-5 w-5 text-muted-foreground" />
+            ) : (
+              <Menu className="h-5 w-5 text-muted-foreground" />
+            )}
+          </motion.span>
+        </AnimatePresence>
       </button>
     </div>
   );
