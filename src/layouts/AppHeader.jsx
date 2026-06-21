@@ -2,6 +2,7 @@
 
 import { Dropdown, DropdownItem } from "@/components/Dropdown";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Input } from "@/components/Input";
 
 export function AppHeader() {
   return (
@@ -14,8 +15,11 @@ export function AppHeader() {
         </Dropdown>
       </div>
 
-      <div className="text-center text-sm font-semibold">
-        Solución algorítmica
+      <div className="flex justify-center">
+        <Input
+          defaultValue="Solución algorítmica"
+          className="text-center font-bold"
+        />
       </div>
 
       <div className="flex justify-end">
