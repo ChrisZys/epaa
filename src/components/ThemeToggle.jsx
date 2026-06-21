@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import Sun from "@boxicons/react/Sun";
-import Moon from "@boxicons/react/Moon";
+import { Sun, Moon } from "@boxicons/react";
 import { Button } from "@/components/Button";
 import { iconBlurExit, iconBlurEnter } from "@/lib/animations";
 

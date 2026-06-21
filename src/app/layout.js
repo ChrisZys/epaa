@@ -1,10 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppHeader } from "@/layouts/AppHeader";
 import { NavigationDock } from "@/layouts/NavigationDock";
-import Search from "@boxicons/react/Search";
-import Clipboard from "@boxicons/react/Clipboard";
-import Layers from "@boxicons/react/Layers";
-import CheckShield from "@boxicons/react/CheckShield";
+import { Search, Clipboard, Layers, CheckShield } from "@boxicons/react";
 import "./globals.css";
 
 const geistSans = Geist({
