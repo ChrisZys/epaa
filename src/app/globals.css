@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --card: #fafafa;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
   --primary: #0e0ece;
   --primary-foreground: #fafafa;
   --secondary: #f4f4f5;
@@ -15,12 +19,20 @@
   --accent-foreground: #18181b;
   --border: #e4e4e7;
   --ring: #18181b;
+  --analysis: #16a34a;
+  --plan: #9333ea;
+  --design: #2563eb;
+  --verify: #ea580c;
   --radius: 1rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -33,6 +45,10 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
+  --color-analysis: var(--analysis);
+  --color-plan: var(--plan);
+  --color-design: var(--design);
+  --color-verify: var(--verify);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -44,6 +60,10 @@
 :root.dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --card: #171717;
+  --card-foreground: #ededed;
+  --popover: #1a1a1e;
+  --popover-foreground: #ededed;
   --primary: #fafafa;
   --primary-foreground: #18181b;
   --secondary: #27272a;
@@ -56,6 +76,10 @@
   --accent-foreground: #fafafa;
   --border: #27272a;
   --ring: #d4d4d8;
+  --analysis: #4ade80;
+  --plan: #c084fc;
+  --design: #60a5fa;
+  --verify: #fb923c;
 }
 
 body {
