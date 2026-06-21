@@ -1,36 +1,3 @@
 {
-  "permissions": {
-    "bash": "ask",
-    "edit": "allow",
-    "read": "allow",
-    "todowrite": "allow"
-  },
-  "bash_allowlist": [
-    "bun install",
-    "bun run lint",
-    "bun test",
-    "make",
-    "make clean",
-    "gcc",
-    "./gradlew test",
-    "git status",
-    "git diff"
-  ],
-  "ignore_patterns": [
-    ".env*",
-    "node_modules/",
-    ".gradle/",
-    "build/",
-    "out/",
-    "*.sqlite",
-    "*.db",
-    "keys/",
-    "*.pem"
-  ],
-  "context_files": ["AGENTS.md"],
-  "auto_lint_command": "bun run lint",
-  "agent": {
-    "max_iterations": 15,
-    "temperature": 0.2
-  }
+  "$schema": "https://opencode.ai/config.json"
 }
