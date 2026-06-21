@@ -1,3 +1,6 @@
+"use client";
+
+import { AnimatePresence, motion } from "motion/react";
 import { Card, CardContent } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { cn } from "@/lib/utils";
@@ -53,7 +56,7 @@ export function CategoryCard({
       onClick={onSelect}
     >
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
-        <span className="text-sm font-semibold">{category.name}</span>
+        <span className="text-base font-semibold" style={{ color: categoryTextColors[category.id] }}>{category.name}</span>
         <div
           className="flex h-4 w-4 items-center justify-center rounded-full border-2 bg-transparent transition-colors"
           style={{ borderColor: color }}
@@ -69,31 +72,37 @@ export function CategoryCard({
       <CardContent className="flex flex-col gap-2 min-h-15">
         {tokens.length > 0 ? (
           <div className="flex flex-wrap gap-1.5">
-            {tokens.map((token) => (
-              <span
-                key={token.id}
-                className="inline-flex items-center gap-1 rounded-sm border pl-3 pr-1 py-1 text-sm font-semibold transition-colors"
-                style={{
-                  backgroundColor: bgColor,
-                  borderColor: borderColor,
-                  color: categoryTextColors[token.categoryId],
-                }}
-              >
-                {token.text}
-                <Button
-                  variant="invisible"
-                  size="icon"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onRemoveToken(token.id);
+            <AnimatePresence mode="popLayout">
+              {tokens.map((token) => (
+                <motion.span
+                  key={token.id}
+                  layout
+                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: "easeOut" } }}
+                  exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15, ease: "easeOut" } }}
+                  className="inline-flex items-center gap-1 rounded-sm border pl-3 pr-1 py-1 text-sm font-semibold transition-colors"
+                  style={{
+                    backgroundColor: bgColor,
+                    borderColor: borderColor,
+                    color: categoryTextColors[token.categoryId],
                   }}
-                  className="size-5"
-                  aria-label={`Quitar ${token.text}`}
                 >
-                  <X className="size-3" style={{ color: categoryTextColors[category.id] }} />
-                </Button>
-              </span>
-            ))}
+                  {token.text}
+                  <Button
+                    variant="invisible"
+                    size="icon"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onRemoveToken(token.id);
+                    }}
+                    className="size-5"
+                    aria-label={`Quitar ${token.text}`}
+                  >
+                    <X className="size-3" style={{ color: categoryTextColors[category.id] }} />
+                  </Button>
+                </motion.span>
+              ))}
+            </AnimatePresence>
           </div>
         ) : (
           <span className="text-xs text-muted-foreground">

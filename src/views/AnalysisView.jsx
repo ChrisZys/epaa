@@ -5,11 +5,11 @@ import { CategoryGrid } from "@/modules/Analysis/components/CategoryGrid";
 
 export function AnalysisView() {
   return (
-    <div className="flex flex-1 flex-col lg:flex-row">
-      <div className="flex flex-col gap-6 p-6 lg:w-1/2 lg:max-w-xl">
+    <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 p-6 lg:flex-row">
+      <div className="flex flex-col gap-6 lg:w-1/2">
         <ProblemStatementCard />
       </div>
-      <div className="p-6 lg:w-1/2">
+      <div className="lg:w-1/2">
         <CategoryGrid />
       </div>
     </div>
