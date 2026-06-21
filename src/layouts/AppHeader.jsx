@@ -7,7 +7,7 @@ export function AppHeader() {
   return (
     <header className="grid grid-cols-3 items-center border-b border-border p-4">
       <div className="flex justify-start">
-        <Dropdown trigger={<span className="text-sm font-medium">Menú</span>}>
+        <Dropdown trigger={<span>Menú</span>}>
           <DropdownItem>Nueva Solución</DropdownItem>
           <DropdownItem>Guardar Solución</DropdownItem>
           <DropdownItem>Abrir Solución</DropdownItem>

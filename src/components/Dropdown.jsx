@@ -11,7 +11,7 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/Button";
+import { Button } from "@/components/Button";
 import {
   morphSpring,
   contentBlurEnter,
@@ -32,6 +32,9 @@ function DropdownRoot({
   trigger,
   children,
   className,
+  variant = "outline",
+  size = "md",
+  disabled = false,
   align = "start",
   isOpen: controlledOpen,
   onOpenChange,
@@ -42,7 +45,6 @@ function DropdownRoot({
 
   const layoutId = useId();
   const containerRef = useRef(null);
-  const triggerRef = useRef(null);
 
   const setIsOpen = useCallback(
     (next) => {
@@ -70,7 +72,7 @@ function DropdownRoot({
     (event) => {
       if (event.key === "Escape") {
         close();
-        triggerRef.current?.focus();
+        containerRef.current?.querySelector("button")?.focus();
       }
     },
     [close],
@@ -88,33 +90,34 @@ function DropdownRoot({
 
   return (
     <DropdownContext.Provider
-      value={{ isOpen, setIsOpen, close, layoutId, containerRef, triggerRef }}
+      value={{ isOpen, setIsOpen, close, layoutId, containerRef }}
     >
       <div ref={containerRef} className={cn("relative inline-flex", className)}>
-        <motion.button
-          ref={triggerRef}
-          type="button"
+        <motion.div
           layoutId={layoutId}
           transition={morphSpring}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-haspopup="menu"
-          aria-expanded={isOpen}
-          className={cn(
-            buttonVariants({ variant: "outline" }),
-            "bg-background",
-          )}
+          className="flex"
         >
-          <motion.span
-            animate={{
-              filter: isOpen ? "blur(16px)" : "blur(0px)",
-              opacity: isOpen ? 0 : 1,
-            }}
-            transition={isOpen ? contentBlurExit : contentBlurEnter}
-            className="flex items-center gap-2"
+          <Button
+            variant={variant}
+            size={size}
+            disabled={disabled}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-haspopup="menu"
+            aria-expanded={isOpen}
           >
-            {trigger}
-          </motion.span>
-        </motion.button>
+            <motion.span
+              animate={{
+                filter: isOpen ? "blur(16px)" : "blur(0px)",
+                opacity: isOpen ? 0 : 1,
+              }}
+              transition={isOpen ? contentBlurExit : contentBlurEnter}
+              className="flex items-center gap-2"
+            >
+              {trigger}
+            </motion.span>
+          </Button>
+        </motion.div>
 
         <AnimatePresence>
           {isOpen && (
@@ -123,7 +126,7 @@ function DropdownRoot({
               transition={morphSpring}
               role="menu"
               className={cn(
-                "absolute top-0 z-50 flex flex-col border border-border bg-background shadow-lg min-w-[220px] overflow-hidden rounded-md",
+                "absolute top-0 z-50 flex flex-col border border-border bg-background shadow-lg min-w-55 overflow-hidden rounded-md",
                 align === "end" ? "right-0" : "left-0",
               )}
             >
@@ -134,21 +137,19 @@ function DropdownRoot({
                 className="flex flex-col"
               >
                 <div className="flex items-center justify-between px-4 py-2 border-b border-border">
-                  <span className="font-medium">{trigger}</span>
-                  <button
-                    type="button"
+                  <span className="font-semibold">{trigger}</span>
+                  <Button
+                    variant="invisible"
+                    size="icon"
                     onClick={(event) => {
                       event.stopPropagation();
                       close();
                     }}
-                    className={cn(
-                      buttonVariants({ variant: "invisible", size: "icon" }),
-                      "size-6",
-                    )}
+                    className="size-6"
                     aria-label="Cerrar menú"
                   >
                     ✕
-                  </button>
+                  </Button>
                 </div>
                 <div className="p-1">{children}</div>
               </motion.div>
@@ -173,7 +174,7 @@ function DropdownItem({ children, onClick, disabled, className, ...props }) {
         if (!event.defaultPrevented) close();
       }}
       className={cn(
-        "flex w-full items-center rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:bg-accent focus-visible:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
+        "flex w-full cursor-pointer items-center rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:bg-accent focus-visible:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
         className,
       )}
       {...props}
