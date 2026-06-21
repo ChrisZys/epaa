@@ -32,6 +32,12 @@
   --plan: #9333ea;
   --design: #2563eb;
   --verify: #ea580c;
+
+  --category-has: #0d9488;
+  --category-seeks: #d97706;
+  --category-solves: #e11d48;
+  --category-rules: #6366f1;
+
   --radius: 1rem;
 }
 
@@ -58,6 +64,10 @@
   --color-plan: var(--plan);
   --color-design: var(--design);
   --color-verify: var(--verify);
+  --color-category-has: var(--category-has);
+  --color-category-seeks: var(--category-seeks);
+  --color-category-solves: var(--category-solves);
+  --color-category-rules: var(--category-rules);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -98,6 +108,11 @@
   --plan: #c084fc;
   --design: #60a5fa;
   --verify: #fb923c;
+
+  --category-has: #2dd4bf;
+  --category-seeks: #fbbf24;
+  --category-solves: #fb7185;
+  --category-rules: #818cf8;
 }
 
 body {
