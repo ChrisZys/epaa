@@ -6,7 +6,7 @@ import { Input } from "@/components/Input";
 
 export function AppHeader() {
   return (
-    <header className="grid grid-cols-3 items-center border-b border-border p-4">
+    <header className="grid grid-cols-3 items-center border-b border-border bg-card p-4">
       <div className="flex justify-start">
         <Dropdown trigger={<span>Menú</span>}>
           <DropdownItem>Nueva Solución</DropdownItem>

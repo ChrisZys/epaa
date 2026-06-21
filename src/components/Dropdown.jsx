@@ -126,7 +126,7 @@ function DropdownRoot({
               transition={morphSpring}
               role="menu"
               className={cn(
-                "absolute top-0 z-50 flex flex-col border border-border bg-background shadow-lg min-w-55 overflow-hidden rounded-md",
+                "absolute top-0 z-50 flex flex-col border border-border bg-popover text-popover-foreground shadow-lg min-w-55 overflow-hidden rounded-md",
                 align === "end" ? "right-0" : "left-0",
               )}
             >
