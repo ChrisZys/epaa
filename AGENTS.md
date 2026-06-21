@@ -5,7 +5,7 @@ Eres un Ingeniero de Software Senior trabajando en este repositorio. Tu objetivo
 ## 1. Visión General del Proyecto (EPAA)
 
 - **Propósito:** Epaa es una plataforma web educativa interactiva (versión modernizada) cuyo objetivo es enseñar lógica algorítmica a estudiantes universitarios de nuevo ingreso. La plataforma guía al alumno a través de una metodología estricta de 4 fases secuenciales:
-  1. **Análisis:** El estudiante lee un enunciado y extrae tokens clave (entradas, salidas, reglas del problema, etc).
+  1. **Análisis:** El estudiante lee un enunciado y extrae tokens que clasifica en 4 categorías: **¿Qué tenemos?** (entradas y constantes), **¿Qué buscamos?** (salidas), **¿Cómo lo resolvemos?** (proceso), **¿Bajo qué reglas?** (restricciones).
   2. **Planeación:** A partir del análisis previo, el estudiante define, tipa y detalla las variables a utilizar.
   3. **Diseño:** El estudiante construye visualmente el diagrama de flujo del algoritmo utilizando la lógica de selección de tokens y variables generadas en las fases anteriores.
   4. **Verificación:** El sistema evalúa y comprueba la lógica del diagrama para confirmar que resuelve el problema original.
@@ -20,7 +20,7 @@ Eres un Ingeniero de Software Senior trabajando en este repositorio. Tu objetivo
 - **Tailwind CSS v4:** Utilizamos un enfoque 100% _CSS-first_. **No** intentes buscar, leer ni crear un archivo `tailwind.config.js`. Usa las clases utilitarias directamente y la nueva sintaxis de la versión 4.
 - **Componentes UI:** Shadcn UI se usa únicamente como **referencia visual/estética** (espaciado, radios, tipografía). No instalamos ni copiamos sus componentes Radix; todo se construye desde cero con primitivas HTML y Tailwind.
 - **Estado Global:** Zustand (Mas detalle en la sección 4.1).
-- **Iconos:** Utiliza siempre el paquete oficial `@boxicons/react`. Prohibido usar SVGs inline crudos o cualquier otro tipo de icono (SVG, emoji, texto) a menos que el usuario lo autorice explícitamente. Si el ícono que necesitas no existe en `@boxicons/react`, pregúntame antes de usar una alternativa.
+- **Iconos:** Utiliza siempre el paquete oficial `@boxicons/react`. Los iconos se importan con **named imports**: `import { Search, X } from "@boxicons/react"`. Prohibido usar importaciones directas de subpath (`import X from "@boxicons/react/X"`) o SVGs inline crudos. Si el ícono que necesitas no existe en `@boxicons/react`, pregúntame antes de usar una alternativa.
 - **Animaciones**: Usa siempre la librería `motion/react` para implementar animaciones. No uses la versión anterior `framer-motion`.
 
 ## 3. Nomenclatura (Naming Conventions)
@@ -111,6 +111,42 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 - Config del fade-in del contenido: `{ duration: 0.3, ease: "easeOut", delay: 0.15 }`.
 - El panel tiene `overflow-hidden` para que el contenido no se vea durante el morph de cierre.
 - No requiere backdrop oscurecido. Para cerrar al hacer click afuera, usa un listener `mousedown` con `contains()`.
+
+### 5.4 Transiciones de Iconos en Botones
+
+Cuando un botón cambia de icono (ThemeToggle, menú mobile, etc.), usa `AnimatePresence mode="wait"` con `initial={false}`:
+
+- Envuelve cada icono en un `motion.span` con `key` único por estado (ej. `key={isDark ? "moon" : "sun"}`).
+- **NUNCA uses spring** para estos — son interacciones frecuentes y el spring se siente lento. Usa `iconBlurExit` (80ms easeOut) y `iconBlurEnter` (100ms easeOut) de `src/lib/animations.js`.
+- **Valores de la transición:**
+  - Entrada (`initial`/`exit`): `scale: 0.85`, `filter: "blur(2px)"`, `opacity: 0`
+  - Salida (`animate`): `scale: 1`, `filter: "blur(0px)"`, `opacity: 1`
+- El `transition` se especifica inline en cada variante (`animate.transition`, `exit.transition`), no como prop del `motion.span`.
+- Patrón completo:
+
+```jsx
+<AnimatePresence mode="wait" initial={false}>
+  <motion.span
+    key={condition ? "icon-a" : "icon-b"}
+    initial={{ scale: 0.85, filter: "blur(2px)", opacity: 0 }}
+    animate={{
+      scale: 1,
+      filter: "blur(0px)",
+      opacity: 1,
+      transition: iconBlurEnter,
+    }}
+    exit={{
+      scale: 0.85,
+      filter: "blur(2px)",
+      opacity: 0,
+      transition: iconBlurExit,
+    }}
+    className="flex"
+  >
+    {condition ? <IconA /> : <IconB />}
+  </motion.span>
+</AnimatePresence>
+```
 
 ## 6. Fase de Verificación: Casos Límite
 

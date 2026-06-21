@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Sun from "@boxicons/react/Sun";
-import Moon from "@boxicons/react/Moon";
+import { AnimatePresence, motion } from "motion/react";
+import { Sun, Moon } from "@boxicons/react";
 import { Button } from "@/components/Button";
+import { iconBlurExit, iconBlurEnter } from "@/lib/animations";
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(() => {
@@ -32,7 +33,27 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? "Activar modo claro" : "Activar modo oscuro"}
     >
-      {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={isDark ? "moon" : "sun"}
+          initial={{ scale: 0.85, filter: "blur(2px)", opacity: 0 }}
+          animate={{
+            scale: 1,
+            filter: "blur(0px)",
+            opacity: 1,
+            transition: iconBlurEnter,
+          }}
+          exit={{
+            scale: 0.85,
+            filter: "blur(2px)",
+            opacity: 0,
+            transition: iconBlurExit,
+          }}
+          className="flex"
+        >
+          {isDark ? <Moon className="size-5" /> : <Sun className="size-5" />}
+        </motion.span>
+      </AnimatePresence>
     </Button>
   );
 }

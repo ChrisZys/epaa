@@ -15,6 +15,16 @@ export const contentBlurEnter = {
   delay: 0.15,
 };
 
+export const iconBlurExit = {
+  duration: 0.08,
+  ease: "easeOut",
+};
+
+export const iconBlurEnter = {
+  duration: 0.1,
+  ease: "easeOut",
+};
+
 export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },

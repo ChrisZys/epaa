@@ -32,6 +32,22 @@
   --plan: #9333ea;
   --design: #2563eb;
   --verify: #ea580c;
+
+  --category-has: #0d9488;
+  --category-seeks: #d97706;
+  --category-solves: #e11d48;
+  --category-rules: #6366f1;
+  --category-auxiliary: #64748b;
+
+  --type-integer: #3b82f6;
+  --type-real: #8b5cf6;
+  --type-string: #22c55e;
+  --type-boolean: #f59e0b;
+
+  --idtype-variable: #6366f1;
+  --idtype-constant: #f97316;
+  --idtype-array: #06b6d4;
+
   --radius: 1rem;
 }
 
@@ -58,6 +74,18 @@
   --color-plan: var(--plan);
   --color-design: var(--design);
   --color-verify: var(--verify);
+  --color-category-has: var(--category-has);
+  --color-category-seeks: var(--category-seeks);
+  --color-category-solves: var(--category-solves);
+  --color-category-rules: var(--category-rules);
+  --color-category-auxiliary: var(--category-auxiliary);
+  --color-type-integer: var(--type-integer);
+  --color-type-real: var(--type-real);
+  --color-type-string: var(--type-string);
+  --color-type-boolean: var(--type-boolean);
+  --color-idtype-variable: var(--idtype-variable);
+  --color-idtype-constant: var(--idtype-constant);
+  --color-idtype-array: var(--idtype-array);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -98,6 +126,31 @@
   --plan: #c084fc;
   --design: #60a5fa;
   --verify: #fb923c;
+
+  --category-has: #2dd4bf;
+  --category-seeks: #fbbf24;
+  --category-solves: #fb7185;
+  --category-rules: #818cf8;
+  --category-auxiliary: #94a3b8;
+
+  --type-integer: #60a5fa;
+  --type-real: #a78bfa;
+  --type-string: #4ade80;
+  --type-boolean: #fbbf24;
+
+  --idtype-variable: #818cf8;
+  --idtype-constant: #fb923c;
+  --idtype-array: #22d3ee;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 body {
