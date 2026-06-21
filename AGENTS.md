@@ -138,4 +138,4 @@ Este patrón es independiente del canvas de Diseñar; aplica a cualquier botón 
 - **Comentarios:** No comentes obviedades (ej. `// suma dos números`). Comenta el **por qué** de una decisión técnica o de negocio, no el **qué**.
 - **Prohibido usar JSDoc:** No uses bloques `/** */` para documentar funciones o componentes. El código debe ser auto-documentado con nombres descriptivos.
 - **Refactorización:** Si ves código duplicado mientras trabajas en una tarea, extráelo a un helper o custom hook, pero infórmamelo en el log.
-- **Commits:** Usa Conventional Commits en inglés (`feat`, `add`, `fix`, `refactor`, `docs`, `chore`), con un mensaje corto y descriptivo del cambio.
+- **Commits:** Usa Conventional Commits en inglés (`feat`, `add`, `update`, `fix`, `refactor`, `docs`, `chore`), con un mensaje corto y descriptivo del cambio.
